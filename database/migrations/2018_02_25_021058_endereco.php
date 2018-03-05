@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class Endereco extends Migration
 {
@@ -13,48 +13,45 @@ class Endereco extends Migration
      */
     public function up()
     {
-        
-        Schema::create('pais', function (Blueprint $table) {
+
+        Schema::create('country', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome',120)->default(NULL);
-            $table->string('sigla',10)->default(NULL);
-            //
+            $table->string('name', 120)->default(null);
+            $table->string('abbreviation', 10)->default(null);
         });
 
-        Schema::create('estado', function (Blueprint $table) {
+        Schema::create('state', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome',120)->default(NULL);
-            $table->string('uf',10)->default(NULL);
-            $table->integer('pais')->unsigned();
-            $table->foreign('pais')
-             ->references('id')->on('pais')
-             ->onDelete('cascade');
-            //
+            $table->string('name', 120)->default(null);
+            $table->string('uf', 10)->default(null);
+            $table->integer('country')->unsigned();
+            $table->foreign('country')
+                ->references('id')->on('country')
+                ->onDelete('cascade');
         });
 
-        Schema::create('cidade', function (Blueprint $table) {
+        Schema::create('city', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome',120)->default(NULL);
-            $table->integer('estado')->unsigned();
-            $table->foreign('estado')
-             ->references('id')->on('estado')
-             ->onDelete('cascade');
-            //
-        });        
+            $table->string('name', 120)->default(null);
+            $table->integer('state')->unsigned();
+            $table->foreign('state')
+                ->references('id')->on('state')
+                ->onDelete('cascade');
+        });
 
-        Schema::create('endereco', function (Blueprint $table) {
+        Schema::create('address', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('cliente')->unsigned();
-            $table->integer('cidade')->unsigned();       
-            $table->string('logradouro',140)->nullable();
-            $table->string('numero',140)->nullable();
-            $table->string('complemento',140)->nullable();
+            $table->integer('client')->unsigned();
+            $table->integer('city')->unsigned();
+            $table->string('address', 140)->nullable();
+            $table->string('number', 140)->nullable();
+            $table->string('complement', 140)->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('cliente')->references('id')->on('cliente')->onDelete('cascade');
-            $table->foreign('cidade')->references('id')->on('cidade')->onDelete('cascade');
+            $table->foreign('client')->references('id')->on('client')->onDelete('cascade');
+            $table->foreign('city')->references('id')->on('city')->onDelete('cascade');
         });
-        
+
     }
 
     /**
@@ -64,10 +61,10 @@ class Endereco extends Migration
      */
     public function down()
     {
-        Schema::drop('pais');
-        Schema::drop('estado');
-        Schema::drop('cidade');
-        Schema::drop('endereco');
-        
+        Schema::drop('country');
+        Schema::drop('state');
+        Schema::drop('city');
+        Schema::drop('address');
+
     }
 }

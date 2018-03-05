@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class Contato extends Migration
 {
@@ -13,18 +13,18 @@ class Contato extends Migration
      */
     public function up()
     {
-        
-        Schema::create('contato', function (Blueprint $table) {
+
+        Schema::create('contact', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome',140);
-            $table->string('telefone',40);
-            $table->string('email',120)->nullable();
-            $table->integer('cliente')->unsigned();  
-            $table->foreign('cliente')->references('id')->on('cliente')->onDelete('cascade');      
+            $table->string('name', 140);
+            $table->string('telephone', 40);
+            $table->string('email', 120)->nullable();
+            $table->integer('client')->unsigned();
+            $table->foreign('client')->references('id')->on('client')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();                                    
+            $table->softDeletes();
         });
-        
+
     }
 
     /**
@@ -34,8 +34,8 @@ class Contato extends Migration
      */
     public function down()
     {
-        
-        Schema::drop('contato');
-        
+
+        Schema::drop('contact');
+
     }
 }

@@ -24,7 +24,7 @@
             "database/factories"
         ],
         "psr-4": {
-            "api_cliente\\": "app/"
+            "App\\": "app/"
         }
     },
     "autoload-dev": {

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class Cliente extends Migration
 {
@@ -13,16 +13,16 @@ class Cliente extends Migration
      */
     public function up()
     {
-        
-        Schema::create('cliente', function (Blueprint $table) {
+
+        Schema::create('client', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome',140);     
-            $table->string('telefone',40);
-            $table->string('celular',40);
+            $table->string('name', 140);
+            $table->string('telephone', 40);
+            $table->string('cellphone', 40);
             $table->timestamps();
             $table->softDeletes();
-         });
-        
+        });
+
     }
 
     /**
@@ -32,6 +32,6 @@ class Cliente extends Migration
      */
     public function down()
     {
-         Schema::drop('cliente');
+        Schema::drop('client');
     }
 }
