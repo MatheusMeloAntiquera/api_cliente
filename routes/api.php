@@ -17,8 +17,10 @@ use Illuminate\Http\Request;
 return $request->user();
 }); */
 
-Route::post('/client', "ClientController@create");
-Route::get('/client', "ClientController@list");
-Route::get('/client/{id}', "ClientController@getById");
-Route::put('/client/{id}', "ClientController@update");
-Route::delete('/client/{id}', "ClientController@delete");
+Route::prefix('customer')->group(function () {
+    Route::post('/', "CustomerController@create");
+    Route::get('/', "CustomerController@list");
+    Route::get('/{id}', "CustomerController@getById");
+    Route::put('/{id}', "CustomerController@update");
+    Route::delete('/{id}', "CustomerController@delete");
+});

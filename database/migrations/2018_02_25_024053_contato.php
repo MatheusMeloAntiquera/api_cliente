@@ -19,8 +19,8 @@ class Contato extends Migration
             $table->string('name', 140);
             $table->string('telephone', 40);
             $table->string('email', 120)->nullable();
-            $table->integer('client')->unsigned();
-            $table->foreign('client')->references('id')->on('client')->onDelete('cascade');
+            $table->integer('customer')->unsigned();
+            $table->foreign('customer')->references('id')->on('customer')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

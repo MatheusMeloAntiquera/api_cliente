@@ -1,35 +1,33 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
-class ClientModel extends Model
+class CustomerModel extends Model
 {
-    protected $fillable = ['nome', 'telefone', 'celular', 'cliente', 'cidade',
-        'logradouro', 'numero', 'complemento'];
 
     protected $guarded = ['id', 'created_at', 'update_at'];
 
-    protected $table = ['cliente'];
+    protected $table = ['customer'];
 
     protected $dates = ['deleted_at'];
 
     public $timestamps = true;
 
-    public static function createClient($data)
+    public static function createCustomer($data)
     {
 
         DB::beginTransaction();
 
         try {
 
-            $idClient = DB::table('client')->insertGetId($data['client']);
+            $idCustomer = DB::table('customer')->insertGetId($data['customer']);
 
             //Melhorar isso futuramente
-            $data['address']['client'] = $idClient;
+            $data['address']['customer'] = $idCustomer;
             DB::table('address')->insert($data['address']);
 
             DB::commit();
@@ -44,45 +42,45 @@ class ClientModel extends Model
     public static function findAll()
     {
         //Melhorar futuramente com o business
-        $clients = DB::table('client as cli')
-            ->select('cli.id as client_id', 'cli.name as client_name', 'telephone', 'cellphone'
+        $customers = DB::table('customer as cus')
+            ->select('cus.id as customer_id', 'cus.name as customer_name', 'telephone', 'cellphone'
                 , 'add.city', 'add.address', 'add.number', 'add.complement')
-            ->join('address as add', 'add.client', '=', 'cli.id')
+            ->join('address as add', 'add.customer', '=', 'cus.id')
             ->join('city', 'city.id', '=', 'add.city')
-            ->where('cli.deleted_at', null)
+            ->where('cus.deleted_at', null)
             ->get();
 
-        return $clients;
+        return $customers;
     }
 
     public static function getById($id)
     {
         //Melhorar futuramente com o business
-        $client = DB::table('client as cli')
-            ->select('cli.id as client_id', 'cli.name as client_name', 'telephone', 'cellphone'
+        $customer = DB::table('customer as cus')
+            ->select('cus.id as customer_id', 'cus.name as customer_name', 'telephone', 'cellphone'
                 , 'add.city', 'add.address', 'add.number', 'add.complement')
-            ->join('address as add', 'add.client', '=', 'cli.id')
+            ->join('address as add', 'add.customer', '=', 'cus.id')
             ->join('city', 'city.id', '=', 'add.city')
-            ->where('cli.deleted_at', null)
-            ->where('cli.id', $id)
+            ->where('cus.deleted_at', null)
+            ->where('cus.id', $id)
             ->get();
 
-        return $client;
+        return $customer;
     }
 
     //Melhorar
-    public static function updateClient(array $data = [])
+    public static function updateCustomer(array $data = [])
     {
         DB::beginTransaction();
 
         try {
 
-            $idClient = DB::table('client')->where('id', $data['id'])
-                ->update($data['client']);
+            $idCustomer = DB::table('customer')->where('id', $data['id'])
+                ->update($data['customer']);
 
             //Melhorar isso futuramente
             DB::table('address')
-                ->where('client', $data['id'])
+                ->where('customer', $data['id'])
                 ->update($data['address']);
 
             DB::commit();
@@ -94,18 +92,18 @@ class ClientModel extends Model
         }
     }
 
-    public static function deleteClient($data)
+    public static function deleteCustomer($data)
     {
         DB::beginTransaction();
         $deleted_at = $data['deleted_at'];
         try {
 
-            $idClient = DB::table('client')->where('id', $data['id'])
+            $idCustomer = DB::table('customer')->where('id', $data['id'])
                 ->update(['deleted_at' => $deleted_at]);
 
             //Melhorar isso futuramente
             DB::table('address')
-                ->where('client', $data['id'])
+                ->where('customer', $data['id'])
                 ->update(['deleted_at' => $deleted_at]);
 
             DB::commit();

@@ -14,7 +14,7 @@ class Cliente extends Migration
     public function up()
     {
 
-        Schema::create('client', function (Blueprint $table) {
+        Schema::create('customer', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 140);
             $table->string('telephone', 40);
@@ -32,6 +32,6 @@ class Cliente extends Migration
      */
     public function down()
     {
-        Schema::drop('client');
+        Schema::drop('customer');
     }
 }

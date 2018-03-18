@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Business;
 
-use App\ClientModel;
+use App\Models\CustomerModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class CustomerBusiness
 {
-    public function create(Request $request)
+    public function create($request)
     {
-        $data['client'] = [
+        $data['customer'] = [
             'name' => $request->input('name'),
             'telephone' => $request->input('telephone'),
             'cellphone' => $request->input('cellphone'),
@@ -24,39 +24,39 @@ class ClientController extends Controller
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
 
-        return response()->json(['message' => ClientModel::createClient($data)], 201);
+        return response()->json(['message' => CustomerModel::createCustomer($data)], 201);
     }
 
     function list() {
 
-        $clients = ClientModel::findAll();
+        $customers = CustomerModel::findAll();
 
-        if ($clients->isEmpty()) {
+        if ($customers->isEmpty()) {
             return response()->json([
                 'message' => 'No records found',
             ], 404);
         }
 
-        return response()->json($clients);
+        return response()->json($customers);
     }
 
     public function getById($id)
     {
-        $client = ClientModel::getById($id);
+        $customer = CustomerModel::getById($id);
 
-        if ($client->isEmpty()) {
+        if ($customer->isEmpty()) {
             return response()->json([
                 'message' => 'Record not found',
             ], 404);
         }
 
-        return response()->json($client, 200);
+        return response()->json($customer, 200);
 
     }
 
     public function update(Request $request, $id)
     {
-        $data['client'] = [
+        $data['customer'] = [
             'name' => $request->input('name'),
             'telephone' => $request->input('telephone'),
             'cellphone' => $request->input('cellphone'),
@@ -70,8 +70,8 @@ class ClientController extends Controller
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
 
-        //Check if the client exists
-        if (ClientModel::getById($id)->isEmpty()) {
+        //Check if the customer exists
+        if (CustomerModel::getById($id)->isEmpty()) {
             return response()->json([
                 'message' => 'Record not found',
             ], 404);
@@ -80,19 +80,19 @@ class ClientController extends Controller
         $data['id'] = $id;
 
         //Melhorar o tratamento de erros
-        return response()->json(ClientModel::updateClient($data));
+        return response()->json(CustomerModel::updateCustomer($data));
     }
 
     public function delete($id)
     {
-        //Check if the client exists
-        if (ClientModel::getById($id)->isEmpty()) {
+        //Check if the customer exists
+        if (CustomerModel::getById($id)->isEmpty()) {
             return response()->json([
                 'message' => 'Record not found',
             ], 404);
         }
 
         $data = ['id' => $id, 'deleted_at' => Carbon::now()->format('Y-m-d H:i:s')];
-        return response()->json(ClientModel::deleteClient($data));
+        return response()->json(CustomerModel::deleteCustomer($data));
     }
 }

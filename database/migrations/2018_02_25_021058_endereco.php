@@ -41,14 +41,14 @@ class Endereco extends Migration
 
         Schema::create('address', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('client')->unsigned();
+            $table->integer('customer')->unsigned();
             $table->integer('city')->unsigned();
             $table->string('address', 140)->nullable();
             $table->string('number', 140)->nullable();
             $table->string('complement', 140)->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('client')->references('id')->on('client')->onDelete('cascade');
+            $table->foreign('customer')->references('id')->on('customer')->onDelete('cascade');
             $table->foreign('city')->references('id')->on('city')->onDelete('cascade');
         });
 
