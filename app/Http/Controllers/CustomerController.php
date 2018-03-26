@@ -25,7 +25,7 @@ class CustomerController extends Controller
 
     public function getById($id)
     {
-        return $this->customerBusiness->getById();
+        return $this->customerBusiness->getById($id);
     }
 
     public function update(Request $request, $id)
